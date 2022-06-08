@@ -292,7 +292,9 @@
                             <th>القيمة</th>
                             <th>المتبقي من المباع</th>
                             <th>التاريخ</th>
-                            <th>الأعدادات</th>
+                            <?php if(Auth::user()->can('order-update_payment') || Auth::user()->isadmin): ?>
+                                <th>الأعدادات</th>
+                            <?php endif; ?>
                             </thead>
                             <tbody>
                             <?php
@@ -302,15 +304,25 @@
                                 <tr class="odd gradeX">
                                     <td><?php echo e($loop->iteration); ?></td>
                                     <td>
-                                        <a href="#" data-toggle="modal" data-target="#update_payment-<?php echo e($payment->id); ?>"><?php echo e($payment->price); ?></a>
+                                        <?php if(Auth::user()->can('order-update_payment') || Auth::user()->isadmin): ?>
+                                            <a href="#" data-toggle="modal" data-target="#update_payment-<?php echo e($payment->id); ?>"><?php echo e($payment->price); ?></a>
+                                        <?php else: ?>
+                                            <?php echo e($payment->price); ?>
+
+                                        <?php endif; ?>
                                     </td>
-                                    <td><?php echo e($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price)); ?></td>
+                                    <td>
+                                        <?php echo e($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price)); ?>
+
+                                    </td>
                                     <td>
                                         <a href="#" data-toggle="modal" data-target="#update_date-<?php echo e($payment->id); ?>"><?php echo e($payment->created_at->format('d-m-y h:i A')); ?></a>
                                     </td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete_payment<?php echo e($payment->id); ?>">حذف</button>
-                                    </td>
+                                    <?php if(Auth::user()->can('order-update_payment') || Auth::user()->isadmin): ?>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete_payment<?php echo e($payment->id); ?>">حذف</button>
+                                        </td>
+                                    <?php endif; ?>
                                 </tr>
                                 
                                     <div class="modal fade" id="update_date-<?php echo e($payment->id); ?>" tabindex="-1" customer="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

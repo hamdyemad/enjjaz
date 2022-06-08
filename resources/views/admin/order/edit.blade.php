@@ -282,7 +282,9 @@
                             <th>القيمة</th>
                             <th>المتبقي من المباع</th>
                             <th>التاريخ</th>
-                            <th>الأعدادات</th>
+                            @if(Auth::user()->can('order-update_payment') || Auth::user()->isadmin)
+                                <th>الأعدادات</th>
+                            @endif
                             </thead>
                             <tbody>
                             @php
@@ -292,15 +294,23 @@
                                 <tr class="odd gradeX">
                                     <td>{{$loop->iteration}}</td>
                                     <td>
-                                        <a href="#" data-toggle="modal" data-target="#update_payment-{{ $payment->id }}">{{$payment->price}}</a>
+                                        @if(Auth::user()->can('order-update_payment') || Auth::user()->isadmin)
+                                            <a href="#" data-toggle="modal" data-target="#update_payment-{{ $payment->id }}">{{$payment->price}}</a>
+                                        @else
+                                            {{$payment->price}}
+                                        @endif
                                     </td>
-                                    <td>{{$item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price)}}</td>
+                                    <td>
+                                        {{$item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price)}}
+                                    </td>
                                     <td>
                                         <a href="#" data-toggle="modal" data-target="#update_date-{{ $payment->id }}">{{$payment->created_at->format('d-m-y h:i A')}}</a>
                                     </td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete_payment{{ $payment->id }}">حذف</button>
-                                    </td>
+                                    @if(Auth::user()->can('order-update_payment') || Auth::user()->isadmin)
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete_payment{{ $payment->id }}">حذف</button>
+                                        </td>
+                                    @endif
                                 </tr>
                                 {{-- Start Modal Update date of payment --}}
                                     <div class="modal fade" id="update_date-{{ $payment->id }}" tabindex="-1" customer="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

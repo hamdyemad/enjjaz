@@ -44,6 +44,8 @@ return [
     'order-add_sold'=>'اضافة كمية مباعة في الطلب',
     'order-add_recieve'=>'اضافة كمية مرجعة في الطلب',
     'order-add_payment'=>'اضافة  مدفوعات  في الطلب',
+    'order-update_payment'=>'تعديل  مدفوعات الطلبات',
+    'order-delete_payment'=>'ازالة  مدفوعات الطلبات',
     'order-add_remaining'=>'تعديل  المتبقي  في الطلب',
 
     'setting-edit'=>'تعديل',
