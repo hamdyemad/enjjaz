@@ -225,7 +225,7 @@
                                     المبلغ الإجمالي
                                 </td>
                                 <td>
-                                    <?php echo e($item->total_price()); ?>
+                                    <?php echo e(number_format($item->total_price(), 1)); ?>
 
                                 </td>
                             </tr>
@@ -234,7 +234,7 @@
                                     المبلغ المدفوع
                                 </td>
                                 <td>
-                                    <?php echo e($item->total_payment()); ?>
+                                    <?php echo e(number_format($item->total_payment(), 1)); ?>
 
                                 </td>
                             </tr>
@@ -243,7 +243,7 @@
                                     المبلغ المتبقي
                                 </td>
                                 <td>
-                                    <?php echo e($item->total_price() -$item->total_price_recieve()-$item->total_payment()); ?>
+                                    <?php echo e(number_format($item->total_price() -$item->total_price_recieve()-$item->total_payment(), 1)); ?>
 
                                 </td>
                             </tr>
@@ -259,10 +259,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><?php echo e($item->total_price()); ?></td>
-                                    <td><?php echo e($item->total_price_solds()); ?></td>
-                                    <td><?php echo e($item->remaining()); ?></td>
-                                    <td><?php echo e($item->total_price_recieve()); ?></td>
+                                    <td><?php echo e(number_format($item->total_price(), 1)); ?></td>
+                                    <td><?php echo e(number_format($item->total_price_solds(), 1)); ?></td>
+                                    <td><?php echo e(number_format($item->remaining(), 1)); ?></td>
+                                    <td><?php echo e(number_format($item->total_price_recieve(), 1)); ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -305,14 +305,14 @@
                                     <td><?php echo e($loop->iteration); ?></td>
                                     <td>
                                         <?php if(Auth::user()->can('order-update_payment') || Auth::user()->isadmin): ?>
-                                            <a href="#" data-toggle="modal" data-target="#update_payment-<?php echo e($payment->id); ?>"><?php echo e($payment->price); ?></a>
+                                            <a href="#" data-toggle="modal" data-target="#update_payment-<?php echo e($payment->id); ?>"><?php echo e(number_format($payment->price, 1)); ?></a>
                                         <?php else: ?>
-                                            <?php echo e($payment->price); ?>
+                                            <?php echo e(number_format($payment->price, 1)); ?>
 
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <?php echo e($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price)); ?>
+                                        <?php echo e(number_format($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price), 1)); ?>
 
                                     </td>
                                     <td>
@@ -961,7 +961,7 @@
                                 <?php $__empty_1 = true; $__currentLoopData = $item->payments()->latest()->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $payment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                     <tr class="odd gradeX">
                                         <td><?php echo e($loop->iteration); ?></td>
-                                        <td>تم أضافة مدفوع بقيمة: <?php echo e($payment->price); ?></td>
+                                        <td>تم أضافة مدفوع بقيمة: <?php echo e(number_format($payment->price, 1)); ?></td>
                                         <td><?php echo e($payment->updated_at->diffForHumans()); ?></td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

@@ -595,17 +595,24 @@ class OrderController extends Controller
         $items=Order::whereIn('id',$pdf_list)->orderby('id','desc')->get();
         foreach($items as $item){
             $allProductsRemaininCount = [];
+            $allProductsRemaininPrice = [];
             foreach ($item->products as $product) {
                 array_push($allProductsRemaininCount, $product->remaining_count());
+                array_push($allProductsRemaininPrice, ($product->price * $product->remaining_count()));
             }
             if(count($allProductsRemaininCount) > 0) {
                 $allProductsRemaininCount =  array_reduce($allProductsRemaininCount, function($acc, $curr) {
                     return $acc + $curr;
                 });
             }
+            if(count($allProductsRemaininPrice) > 0) {
+                $allProductsRemaininPrice =  array_reduce($allProductsRemaininPrice, function($acc, $curr) {
+                    return $acc + $curr;
+                });
+            }
             if(isset($item)){
                 $pdf::AddPage();
-                $view=view('admin.order.pdf.index',compact('item', 'allProductsRemaininCount'))->__toString();
+                $view=view('admin.order.pdf.index',compact('item', 'allProductsRemaininCount', 'allProductsRemaininPrice'))->__toString();
                 $pdf::WriteHTML($view,true,0,true,0);
             }
         }

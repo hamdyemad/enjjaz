@@ -55,8 +55,6 @@
                     </div>
                     <div class="panel-body">
                         <form role="form" action="<?php echo e(route('adlogin')); ?>" method="post">
-                            <?php echo e(Hash::make('123456789')); ?>
-
                             <fieldset>
                                 <?php echo csrf_field(); ?>
                                 <div class="form-group">

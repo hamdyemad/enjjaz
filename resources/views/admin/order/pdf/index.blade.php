@@ -63,22 +63,22 @@
 
                     <tr>
                         <td style="background-color:#d5d2dd; font-weight: bold; width: 13%; border: 1px solid #9a8d98; height: 18px">المبلغ الاجمالي</td>
-                        <td class="td_number" style="background-color:#eeebf6;border: 1px solid #9a96a5; font-weight: bold;width: 12%"> {{$item->total_price()}}</td>
+                        <td class="td_number" style="background-color:#eeebf6;border: 1px solid #9a96a5; font-weight: bold;width: 12%"> {{number_format($item->total_price(), 1)}}</td>
 
                         <td style="background-color:#d5d2dd; font-weight: bold;width: 10%; border: 1px solid #9a8d98">قيمة المباع</td>
-                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 12%"> {{$item->total_price_solds()}}</td>
+                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 12%"> {{number_format($item->total_price_solds(), 1)}}</td>
 
                         <td style="background-color:#d5d2dd; font-weight: bold;width: 13%; border: 1px solid #9a8d98">المبلغ المدفوع</td>
-                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 10%">{{$item->total_payment()}}</td>
+                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 10%">{{number_format($item->total_payment(), 1)}}</td>
 
                         <td style="background-color:#d5d2dd; font-weight: bold;width: 17%; border: 1px solid #9a8d98">المتبقي من المباع</td>
-                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 11%"> {{$item->total_price_solds() -$item->total_price_recieve()-$item->total_payment() }}</td>
+                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 11%"> {{number_format($item->total_price_solds() -$item->total_price_recieve()-$item->total_payment(), 1) }}</td>
                     </tr>
                 @endif
 
                     <tr>
-                        <td style="background-color:#f5cec9; font-weight: bold;width: 18%; border: 1px solid #c19e9c">المتبقي من الأجمالى</td>
-                        <td class="td_number" style="background-color:#eadcd9; border: 1px solid #887c7b; font-weight: bold;width: 8%"> {{$item->total_price() -$item->total_price_recieve()-$item->total_payment() }}</td>
+                        <td style="background-color:#f5cec9; font-weight: bold;width: 18%; border: 1px solid #c19e9c">قيمة المرحل</td>
+                        <td class="td_number" style="background-color:#eadcd9; border: 1px solid #887c7b; font-weight: bold;width: 8%"> {{ $allProductsRemaininPrice }}</td>
                         <td style="background-color:#f5cec9; font-weight:bold;width: 13%; border: 1px solid #c19e9c">تاريخ الطلب</td>
                         <td class="td_number" style="background-color: #eadcd9; font-weight:bold;width: 14%;border: 1px solid #887c7b">{{$item->created_at->format('Y-m-d')}}</td>
                         <td style="background-color:#f5cec9;width: 10%; height: 20px; line-height: 20px; font-weight: bold; border: 1px solid #c19e9c">الملاحظات</td>

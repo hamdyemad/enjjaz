@@ -218,7 +218,7 @@
                                     المبلغ الإجمالي
                                 </td>
                                 <td>
-                                    {{$item->total_price() }}
+                                    {{ number_format($item->total_price(), 1) }}
                                 </td>
                             </tr>
                             <tr>
@@ -226,7 +226,7 @@
                                     المبلغ المدفوع
                                 </td>
                                 <td>
-                                    {{$item->total_payment() }}
+                                    {{number_format($item->total_payment(), 1) }}
                                 </td>
                             </tr>
                             <tr>
@@ -234,7 +234,7 @@
                                     المبلغ المتبقي
                                 </td>
                                 <td>
-                                    {{$item->total_price() -$item->total_price_recieve()-$item->total_payment() }}
+                                    {{ number_format($item->total_price() -$item->total_price_recieve()-$item->total_payment(), 1) }}
                                 </td>
                             </tr>
                             </tbody></table>
@@ -249,10 +249,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{$item->total_price()}}</td>
-                                    <td>{{$item->total_price_solds()}}</td>
-                                    <td>{{$item->remaining()}}</td>
-                                    <td>{{$item->total_price_recieve()}}</td>
+                                    <td>{{ number_format($item->total_price(), 1) }}</td>
+                                    <td>{{ number_format($item->total_price_solds(), 1) }}</td>
+                                    <td>{{ number_format($item->remaining(), 1) }}</td>
+                                    <td>{{ number_format($item->total_price_recieve(), 1) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -295,13 +295,13 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>
                                         @if(Auth::user()->can('order-update_payment') || Auth::user()->isadmin)
-                                            <a href="#" data-toggle="modal" data-target="#update_payment-{{ $payment->id }}">{{$payment->price}}</a>
+                                            <a href="#" data-toggle="modal" data-target="#update_payment-{{ $payment->id }}">{{ number_format($payment->price, 1) }}</a>
                                         @else
-                                            {{$payment->price}}
+                                            {{ number_format($payment->price, 1) }}
                                         @endif
                                     </td>
                                     <td>
-                                        {{$item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price)}}
+                                        {{ number_format($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price), 1) }}
                                     </td>
                                     <td>
                                         <a href="#" data-toggle="modal" data-target="#update_date-{{ $payment->id }}">{{$payment->created_at->format('d-m-y h:i A')}}</a>
@@ -939,7 +939,7 @@
                                 @forelse($item->payments()->latest()->get() as $payment)
                                     <tr class="odd gradeX">
                                         <td>{{$loop->iteration}}</td>
-                                        <td>تم أضافة مدفوع بقيمة: {{ $payment->price }}</td>
+                                        <td>تم أضافة مدفوع بقيمة: {{ number_format($payment->price, 1) }}</td>
                                         <td>{{$payment->updated_at->diffForHumans()}}</td>
                                     </tr>
                                 @empty
