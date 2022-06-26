@@ -72,7 +72,17 @@
                         <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 10%"><?php echo e(number_format($item->total_payment(), 1)); ?></td>
 
                         <td style="background-color:#d5d2dd; font-weight: bold;width: 17%; border: 1px solid #9a8d98">المتبقي من المباع</td>
-                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 11%"> <?php echo e(number_format($item->total_price_solds() -$item->total_price_recieve()-$item->total_payment(), 1)); ?></td>
+                        <?php
+                        $remainingOfSolds = number_format($item->total_price_solds() -$item->total_price_recieve()-$item->total_payment(), 1);
+                        ?>
+                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 11%">
+                            <?php if($remainingOfSolds > 0): ?>
+                                <?php echo e($remainingOfSolds); ?>
+
+                            <?php else: ?>
+                                0
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 <?php endif; ?>
 
@@ -119,7 +129,18 @@
                                         <td width="15%"><?php echo e($loop->iteration); ?></td>
                                         <td width="27%"><?php echo e($payment->price); ?></td>
                                         <td width="31%"><?php echo e($payment->created_at->toDateString()); ?></td>
-                                        <td width="28%"><?php echo e($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price)); ?></td>
+                                        <?php
+                                            $remainingSold =  $item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price);
+                                        ?>
+
+                                        <td width="28%">
+                                            <?php if($remainingSold > 0): ?>
+                                                <?php echo e($remainingSold); ?>
+
+                                            <?php else: ?>
+                                                0
+                                            <?php endif; ?>
+                                        </td>
                                     </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 

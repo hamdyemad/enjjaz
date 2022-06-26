@@ -508,7 +508,7 @@ class OrderController extends Controller
                 $err=$validator->errors()->first();
                 return r_backerror($err);
             }
-            $idsOfProducts = explode(',', trim(request('ids'), '[]'));
+            // $idsOfProducts = explode(',', trim(request('ids'), '[]'));
             $orders_p=OrderProduct::where('order_id', $id)->get();
             for($i = 0; $i < count($orders_p->toArray()); $i++) {
                 $o=Order::find($orders_p[$i]->order_id);
@@ -541,6 +541,8 @@ class OrderController extends Controller
                 return r_backerror($err);
             }
             $item=OrderProduct::find($id);
+            $o_sold = OrderSold::where(['product_id' => $item->product_id, 'order_id' => $item->order_id])->first();
+            $o_sold->delete();
             $o=Order::find($item->order_id);
                 if ($o->voice_status == 3){
                 return r_backerror('لا يمكن التعديل على الكمية، والحالة الحالية للفاتورة ملغية');

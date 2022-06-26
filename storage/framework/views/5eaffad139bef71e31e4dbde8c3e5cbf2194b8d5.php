@@ -312,8 +312,15 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <?php echo e(number_format($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price), 1)); ?>
+                                        <?php
+                                            $remiaining = number_format($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price), 1);
+                                        ?>
+                                        <?php if($remiaining > 0): ?>
+                                            <?php echo e($remiaining); ?>
 
+                                        <?php else: ?>
+                                            0
+                                        <?php endif; ?>
                                     </td>
                                     <td>
                                         <a href="#" data-toggle="modal" data-target="#update_date-<?php echo e($payment->id); ?>"><?php echo e($payment->created_at->format('d-m-y h:i A')); ?></a>
@@ -637,17 +644,17 @@
                                             <form method="post" action="<?php echo e(route('order.add_product',['id'=>$item->id])); ?>" enctype="multipart/form-data">
                                                 <?php echo csrf_field(); ?>
                                                 <div class="modal-body">
-                                                    <div class="md-form mb-5" style="    padding-bottom: 18px;">
-                                                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <div class="col-md-8" style="    padding-bottom: 18px;">
+                                                    <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <div class="row" style="padding-bottom: 18px;">
+                                                            <div class="col-xs-8" style="padding-bottom: 18px;">
                                                                 <input disabled class="form-control" type="text" value="<?php echo e($product->name); ?>">
                                                                 <input class="form-control" name="add_products[<?php echo e($loop->index); ?>][product_id]" type="hidden" value="<?php echo e($product->id); ?>">
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-xs-4">
                                                                 <input class="form-control" name="add_products[<?php echo e($loop->index); ?>][count]" type="number" value="0" min="0">
                                                             </div>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </div>
+                                                        </div>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     <div class="modal-footer d-flex justify-content-center">
                                                         <button class="btn save" type="submit" style="width: 99px; margin-left: 40%;  background: #14B9D6;">حفظ</button>
                                                     </div>

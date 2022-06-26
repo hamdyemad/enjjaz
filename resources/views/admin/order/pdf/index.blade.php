@@ -72,7 +72,16 @@
                         <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 10%">{{number_format($item->total_payment(), 1)}}</td>
 
                         <td style="background-color:#d5d2dd; font-weight: bold;width: 17%; border: 1px solid #9a8d98">المتبقي من المباع</td>
-                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 11%"> {{number_format($item->total_price_solds() -$item->total_price_recieve()-$item->total_payment(), 1) }}</td>
+                        @php
+                        $remainingOfSolds = number_format($item->total_price_solds() -$item->total_price_recieve()-$item->total_payment(), 1);
+                        @endphp
+                        <td class="td_number" style="background-color:#eeebf6; border: 1px solid #9a96a5; font-weight: bold;width: 11%">
+                            @if($remainingOfSolds > 0)
+                                {{ $remainingOfSolds }}
+                            @else
+                                0
+                            @endif
+                        </td>
                     </tr>
                 @endif
 
@@ -119,7 +128,17 @@
                                         <td width="15%">{{$loop->iteration}}</td>
                                         <td width="27%">{{$payment->price}}</td>
                                         <td width="31%">{{$payment->created_at->toDateString()}}</td>
-                                        <td width="28%">{{$item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price)}}</td>
+                                        @php
+                                            $remainingSold =  $item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price);
+                                        @endphp
+
+                                        <td width="28%">
+                                            @if($remainingSold > 0)
+                                                {{$remainingSold}}
+                                            @else
+                                                0
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
 

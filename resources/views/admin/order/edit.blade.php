@@ -301,7 +301,14 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ number_format($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price), 1) }}
+                                        @php
+                                            $remiaining = number_format($item->total_price_solds() - $item->total_price_recieve() - ($tt+=$payment->price), 1);
+                                        @endphp
+                                        @if($remiaining > 0)
+                                            {{ $remiaining }}
+                                        @else
+                                            0
+                                        @endif
                                     </td>
                                     <td>
                                         <a href="#" data-toggle="modal" data-target="#update_date-{{ $payment->id }}">{{$payment->created_at->format('d-m-y h:i A')}}</a>
@@ -616,17 +623,17 @@
                                             <form method="post" action="{{route('order.add_product',['id'=>$item->id])}}" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="modal-body">
-                                                    <div class="md-form mb-5" style="    padding-bottom: 18px;">
-                                                        @foreach ($products as $product)
-                                                            <div class="col-md-8" style="    padding-bottom: 18px;">
+                                                    @foreach ($products as $product)
+                                                        <div class="row" style="padding-bottom: 18px;">
+                                                            <div class="col-xs-8" style="padding-bottom: 18px;">
                                                                 <input disabled class="form-control" type="text" value="{{ $product->name}}">
                                                                 <input class="form-control" name="add_products[{{ $loop->index }}][product_id]" type="hidden" value="{{ $product->id }}">
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-xs-4">
                                                                 <input class="form-control" name="add_products[{{ $loop->index }}][count]" type="number" value="0" min="0">
                                                             </div>
-                                                        @endforeach
-                                                    </div>
+                                                        </div>
+                                                    @endforeach
                                                     <div class="modal-footer d-flex justify-content-center">
                                                         <button class="btn save" type="submit" style="width: 99px; margin-left: 40%;  background: #14B9D6;">حفظ</button>
                                                     </div>
