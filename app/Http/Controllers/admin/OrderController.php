@@ -542,7 +542,9 @@ class OrderController extends Controller
             }
             $item=OrderProduct::find($id);
             $o_sold = OrderSold::where(['product_id' => $item->product_id, 'order_id' => $item->order_id])->first();
-            $o_sold->delete();
+            if($o_sold) {
+                $o_sold->delete();
+            }
             $o=Order::find($item->order_id);
                 if ($o->voice_status == 3){
                 return r_backerror('لا يمكن التعديل على الكمية، والحالة الحالية للفاتورة ملغية');
